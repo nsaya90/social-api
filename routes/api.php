@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DislikeController;
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -26,16 +28,28 @@ Route::post('/register', [UserController::class, 'store'])->name('register.store
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
 // Affichage du profil de l'utilisateur connecté
-Route::get('/profil/{id}', [UserController::class, 'profil'])->name('profil.index');
+Route::middleware('auth:sanctum')->get('/profil/{id}', [UserController::class, 'profil'])->name('profil.index');
 
 // Modification du profil
-Route::put('/profil/{id}', [UserController::class, 'update'])->name('profil.update');
+Route::middleware('auth:sanctum')->put('/profil/{id}', [UserController::class, 'update'])->name('profil.update');
 
 // Création d'une publication
-Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::middleware('auth:sanctum')->post('/post', [PostController::class, 'store'])->name('post.store');
 
 // Upload de photo
 Route::post('/upload', [PostController::class, 'upload'])->name('upload.store');
 
 // Récupération de tout les post
-Route::get('/all-post', [PostController::class, 'index'])->name('all-post.index');
+Route::middleware('auth:sanctum')->get('/all-post', [PostController::class, 'index'])->name('all-post.index');
+
+// Ajout de like selon id du post
+Route::middleware('auth:sanctum')->post('/likePost/{id}', [LikesController::class, 'likePost'])->name('like.update');
+
+// Ajout de dislike selon id du post
+Route::middleware('auth:sanctum')->post('/dislikePost/{id}', [DislikeController::class, 'dislikePost'])->name('dislikePost.update');
+
+// Récupération des likes de chaque post
+Route::middleware('auth:sanctum')->get('/countLike/{id}', [PostController::class, 'countLike'])->name('countLike');
+
+// Récupération des dislikes de chaque post
+Route::middleware('auth:sanctum')->get('/countDislike/{id}', [PostController::class, 'countDislike'])->name('countDislike');
