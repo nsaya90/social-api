@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dislike;
 use App\Models\likes;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -127,19 +128,5 @@ class PostController extends Controller
         // $request->file('image')->storeAs('images', $filename, 'public');
         $pathToFile = $request->file('image')->store('images', 'public');
         return response()->json(['message' => 'Ajout de photo réussie', 'url' => $pathToFile]);
-    }
-
-    public function countLike($id)
-    {
-        $count = likes::where('id_post', '=', $id)->count();
-
-        return response()->json(['likes' => $count]);
-    }
-
-    public function countDislike($id)
-    {
-        $dislike = Dislike::where('id_post', '=', $id)->count();
-
-        return response()->json(['dislikes' => $dislike]);
     }
 }
