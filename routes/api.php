@@ -49,7 +49,10 @@ Route::middleware('auth:sanctum')->get('/all-post', [PostController::class, 'ind
 Route::middleware('auth:sanctum')->post('/dislikePost/{id}', [DislikeController::class, 'dislikePost'])->name('dislikePost.update');
 
 // Ajout / Supprésion des likes de chaque post
-Route::middleware('auth:sanctum')->post('/like/{id}/{id_post}', [LikesController::class, 'like'])->name('countLike');
+Route::middleware('auth:sanctum')->post('/like/{id}/{id_post}', [LikesController::class, 'like'])->name('like');
 
 // Récupération des likes de chaque post
-Route::middleware('auth:sanctum')->get('/countLike/{id}', [LikesController::class, 'countLike'])->name('countLike');
+Route::middleware('auth:sanctum')->get('/countLike', [LikesController::class, 'countLike'])->name('countLike');
+
+// Verification des likes de chaque user
+Route::middleware('auth:sanctum')->get('/showLike/{id}/{id_post}', [LikesController::class, 'showLike'])->name('showLike');

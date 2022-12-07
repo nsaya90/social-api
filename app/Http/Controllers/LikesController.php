@@ -27,7 +27,6 @@ class LikesController extends Controller
     public function like($id_post, $id_user)
     {
 
-        // $like = likes::select('select from likes where (id_post and id_user) values (?, ?)', [$id_post, $id_user])->count();
 
         $like = DB::table('likes')
             ->where('id_post', '=', $id_post)
@@ -39,6 +38,8 @@ class LikesController extends Controller
                 ->where('id_post', '=', $id_post)
                 ->where('id_user', '=', $id_user)
                 ->delete();
+
+            $decLike = DB::table('posts')->decrement('like', 1);
             return response()->json(['state' => 'like supprimé']);
         } else {
 
@@ -49,14 +50,29 @@ class LikesController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString()
 
             ]);
+            $incLike = DB::table('posts')->increment('like', 1);
         }
         return response()->json(['likes' => $like]);
     }
 
-    public function countLike($id_post)
+    public function countLike()
     {
-        $countLike = likes::select('select from likes id_post where values (?)', [$id_post])->count();
+        // $countLike = DB::table('likes')
+        //     ->select('id_post');
 
-        return response()->json(['countLike' => $countLike]);
+        $query = DB::table('likes')->select('id_post')->get();
+
+        return response()->json(['countLike' => $query]);
+    }
+
+    public function showLike($id_post, $id_user)
+    {
+
+        $showLike = DB::table('likes')
+            ->where('id_post', '=', $id_post)
+            ->where('id_user', '=', $id_user);
+
+
+        return response()->json(['showLike' => $showLike]);
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('title');
             $table->string('description');
+            $table->integer('like');
             $table->timestamps();
         });
     }
