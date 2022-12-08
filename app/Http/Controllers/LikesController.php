@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dislike;
 use App\Models\likes;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,14 +33,24 @@ class LikesController extends Controller
             ->where('id_post', '=', $id_post)
             ->where('id_user', '=', $id_user)
             ->count();
+
+
+
         if ($like == 1) {
+
+
+            // $decLike = DB::table('posts')->decrement('like', 1);
+
+            $queryDelete = DB::table('posts')->where('id', '=', $id_post)->where('id_user', '=', $id_user);
+
+            $queryDelete->decrement('like', 1);
 
             $delete = DB::table('likes')
                 ->where('id_post', '=', $id_post)
                 ->where('id_user', '=', $id_user)
                 ->delete();
 
-            $decLike = DB::table('posts')->decrement('like', 1);
+
             return response()->json(['state' => 'like supprimé']);
         } else {
 
@@ -50,9 +61,16 @@ class LikesController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString()
 
             ]);
-            $incLike = DB::table('posts')->increment('like', 1);
+
+            // $incLike = DB::table('posts')->increment('like', 1);
+
+            $query = DB::table('posts')
+                ->where('id', '=', $id_post)
+                ->where('id_user', '=', $id_user);
+
+            $query->increment('like', 1);
         }
-        return response()->json(['likes' => $like]);
+        return response()->json(['likes' => 'like pris en compte']);
     }
 
     public function countLike()
