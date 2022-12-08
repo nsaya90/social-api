@@ -18,7 +18,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $allPost = Post::all();
+        // $allPost = Post::all()->orderBy('id', 'desc')->get();
+        $allPost = DB::table('posts')->orderBy('id', 'desc')->get();
+
 
         return response()->json(['allPost' => $allPost]);
     }
