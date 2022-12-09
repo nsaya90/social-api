@@ -19,10 +19,15 @@ class PostController extends Controller
     public function index()
     {
         // $allPost = Post::all()->orderBy('id', 'desc')->get();
-        $allPost = DB::table('posts')->orderBy('id', 'desc')->get();
+        // $allPost = DB::table('posts')->orderBy('id', 'desc')->get();
+
+        $users = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.id_user')
+            ->select('users.*', 'posts.id', 'posts.image', 'posts.title', 'posts.description', 'posts.like', 'posts.id_user')
+            ->get();
 
 
-        return response()->json(['allPost' => $allPost]);
+        return response()->json(['allPost' => $users]);
     }
 
     /**

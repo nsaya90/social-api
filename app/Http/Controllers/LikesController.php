@@ -59,25 +59,4 @@ class LikesController extends Controller
         }
         return response()->json(['likes' => 'like pris en compte']);
     }
-
-    public function countLike()
-    {
-        // $countLike = DB::table('likes')
-        //     ->select('id_post');
-
-        $query = DB::table('likes')->select('id_post')->get();
-
-        return response()->json(['countLike' => $query]);
-    }
-
-    public function showLike($id_post, $id_user)
-    {
-
-        $showLike = DB::table('likes')
-            ->where('id_post', '=', $id_post)
-            ->where('id_user', '=', $id_user);
-
-
-        return response()->json(['showLike' => $showLike]);
-    }
 }
