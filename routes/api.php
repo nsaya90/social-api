@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostController;
@@ -42,11 +43,14 @@ Route::post('/upload', [PostController::class, 'upload'])->name('upload.store');
 // Récupération de tout les post
 Route::middleware('auth:sanctum')->get('/all-post', [PostController::class, 'index'])->name('all-post.index');
 
-// Ajout de dislike selon id du post
-Route::middleware('auth:sanctum')->post('/dislikePost/{id}', [DislikeController::class, 'dislikePost'])->name('dislikePost.update');
-
 // Ajout / Supprésion des likes de chaque post
 Route::middleware('auth:sanctum')->post('/like/{id_post}/{id}', [LikesController::class, 'like'])->name('like');
 
+// Récupération d'un post pour un ajout de commentaire
+Route::middleware('auth:sanctum')->get('/comment/{id_post}', [CommentController::class, 'index'])->name('comment');
 
-Route::get('/test', [PostController::class, 'index']);
+// Récupération des commentaire d'un post
+Route::middleware('auth:sanctum')->get('/showComment/{id_post}', [CommentController::class, 'showComment'])->name('showComment');
+
+// Ajout d'un commentaire d'un post
+Route::middleware('auth:sanctum')->post('/addComment', [CommentController::class, 'store'])->name('store.comment');
