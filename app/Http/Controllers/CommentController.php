@@ -46,6 +46,7 @@ class CommentController extends Controller
             'comment' => $request['comment'],
             'id_user' => Auth::user()->id,
             'id_post' => $request['id_post'],
+            'date_comment' => date('d-m-Y'),
 
         ]);
 
@@ -58,7 +59,7 @@ class CommentController extends Controller
 
         $getComment =  DB::table('users')
             ->join('comments', 'users.id', '=', 'comments.id_user')
-            ->select('users.*', 'comments.comment')
+            ->select('users.*', 'comments.comment', 'comments.date_comment')
             ->get();
 
         return response()->json(['getComment' => $getComment]);

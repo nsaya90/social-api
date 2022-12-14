@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->integer('like');
+            $table->string('date_post');
             $table->timestamps();
         });
     }

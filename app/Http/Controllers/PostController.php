@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dislike;
+
 use App\Models\likes;
 use App\Models\Post;
 use App\Models\User;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,10 +22,11 @@ class PostController extends Controller
     {
         // $allPost = Post::all()->orderBy('id', 'desc')->get();
         // $allPost = DB::table('posts')->orderBy('id', 'desc')->get();
+        // $datePost = DB::select('SELECT CAST(CURRENT_TIMESTAMP AS DATE);');
 
         $users = DB::table('users')
             ->join('posts', 'users.id', '=', 'posts.id_user')
-            ->select('users.*', 'posts.id', 'posts.image', 'posts.title', 'posts.description', 'posts.like', 'posts.id_user')
+            ->select('users.*', 'posts.id', 'posts.date_post', 'posts.image', 'posts.title', 'posts.description', 'posts.like', 'posts.id_user')
             ->get();
 
 
@@ -66,6 +69,7 @@ class PostController extends Controller
 
         // // chemin des images stocker dans le storage
         // $image = $request->file('image')->storeAs('images', $filename, 'public');
+        $date_post = date('d-m-Y');
 
         $post = Post::create([
             'title' => $request['title'],
@@ -73,11 +77,9 @@ class PostController extends Controller
             'image' => $request['image'],
             'id_user' => $request['id_user'],
             'like' => 0,
-
+            'date_post' => $date_post,
 
         ]);
-
-
 
         return response()->json(['message' => 'Post publié', 'Post' => $post]);
     }
