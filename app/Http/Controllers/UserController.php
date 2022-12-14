@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -169,5 +171,15 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();;
         return response()->json(['user' => $user]);
+    }
+
+    public function post_user($id)
+    {
+        $post_user = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.id_user')
+            ->select('users.*', 'posts.id', 'posts.date_post', 'posts.image', 'posts.title', 'posts.description', 'posts.like', 'posts.id_user')
+            ->where('id_user', '=', $id)
+            ->get();
+        return response()->json(['post_user' => $post_user]);
     }
 }
