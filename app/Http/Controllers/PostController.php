@@ -72,7 +72,7 @@ class PostController extends Controller
         $date_post = date('d-m-Y');
 
         $post = Post::create([
-            'title' => $request['title'],
+
             'description' => $request['description'],
             'image' => $request['image'],
             'id_user' => $request['id_user'],

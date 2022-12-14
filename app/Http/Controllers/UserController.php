@@ -173,13 +173,13 @@ class UserController extends Controller
         return response()->json(['user' => $user]);
     }
 
-    public function post_user($id)
+    public function user_post($id)
     {
-        $post_user = DB::table('users')
+        $user_post = DB::table('users')
             ->join('posts', 'users.id', '=', 'posts.id_user')
             ->select('users.*', 'posts.id', 'posts.date_post', 'posts.image', 'posts.title', 'posts.description', 'posts.like', 'posts.id_user')
             ->where('id_user', '=', $id)
             ->get();
-        return response()->json(['post_user' => $post_user]);
+        return response()->json(['post_user' => $user_post]);
     }
 }

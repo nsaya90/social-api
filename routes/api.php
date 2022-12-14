@@ -32,7 +32,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->get('/profil/{id}', [UserController::class, 'profil'])->name('profil.index');
 
 // Affichage des post de l'utilisateur connecté
-Route::middleware('auth:sanctum')->put('/user-post/{id}', [UserController::class, 'post_user'])->name('post_user');
+Route::middleware('auth:sanctum')->get('/user-post/{id_user}', [UserController::class, 'user_post'])->name('user_post');
 
 // Modification du profil
 Route::middleware('auth:sanctum')->put('/profil/{id}', [UserController::class, 'update'])->name('profil.update');
