@@ -15,7 +15,7 @@ class CommentController extends Controller
 
         $comment =   DB::table('users')
             ->join('posts', 'users.id', '=', 'posts.id_user')
-            ->select('users.*', 'posts.id', 'posts.image', 'posts.title', 'posts.description', 'posts.like', 'posts.id_user')
+            ->select('users.*', 'posts.id', 'posts.image', 'posts.description', 'posts.like', 'posts.id_user')
             ->where('posts.id', '=', $id_post)
             ->get();
 

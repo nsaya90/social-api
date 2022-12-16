@@ -26,7 +26,7 @@ class PostController extends Controller
 
         $users = DB::table('users')
             ->join('posts', 'users.id', '=', 'posts.id_user')
-            ->select('users.*', 'posts.id', 'posts.date_post', 'posts.image', 'posts.title', 'posts.description', 'posts.like', 'posts.id_user')
+            ->select('users.*', 'posts.id', 'posts.date_post', 'posts.image', 'posts.description', 'posts.like', 'posts.id_user')
             ->get();
 
 
@@ -53,12 +53,12 @@ class PostController extends Controller
     {
         $request->validate(
             [
-                'title' => 'required|string',
+
                 'description' => 'required|string|max:191',
 
             ],
             [
-                'title.required' => 'Veuillez saisir un titre',
+
                 'description.required' => 'Veuillez saisir une description ',
                 'description.max' => 'Votre description est trop longue',
 
