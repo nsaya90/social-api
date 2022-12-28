@@ -16,17 +16,18 @@
 
 ## Project setup
 ```
-npm install
+php artisan key:generate
 ```
 
-### Compiles and hot-reloads for development
+### Créer une base de donnée vide et migrer les models sur cette nouvelle base de donnée
 ```
-npm run serve
+Modifier le .env -> renommer la database pour faire la correspondance
+php artisan migrate
 ```
 
-### Compiles and minifies for production
+### Lancer l'API
 ```
-npm run build
+php artisan serve
 ```
 
 
